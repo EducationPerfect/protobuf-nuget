@@ -1,0 +1,22 @@
+name: 'Protobuf NuGet Package Generator'
+description: 'Generates and packs C# code as a NuGet package out of Protobuf files'
+inputs:
+  package-name:
+    description: 'The name of the NuGet package'
+    required: true
+  package-version:
+    description: 'The version of the NuGet package'
+    required: true
+  protobuf-dir-path:
+    description: 'The path to the directory containing Protobuf files'
+    required: true
+  output-path:
+    description: 'The path to the put generated package at'
+    required: true
+    default: "./packages"
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ --package-name=inputs.package-name --package-version=inputs.package-version --protobuf-dir-path=inputs.protobuf-dir-path --output-path=inputs.output-path }}
