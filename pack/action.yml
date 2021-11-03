@@ -19,6 +19,7 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
+    - --command=${{ inputs.command }}
     - --package-name=${{ inputs.package-name }} 
     - --package-version=${{ inputs.package-version }} 
     - --protobuf-dir-path=${{ inputs.protobuf-dir-path }} 

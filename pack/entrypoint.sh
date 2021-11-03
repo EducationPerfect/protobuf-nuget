@@ -3,8 +3,6 @@
 #!/bin/sh
 SRC=./src
 
-echo $@
-
 for i in "$@"; do
   case $i in
     -n=*|--package-name=*)
@@ -49,3 +47,4 @@ do
 done
 
 dotnet pack ./$SRC/$PACKAGE_NAME/$PACKAGE_NAME.csproj -c Release -p:PackageVersion=$PACKAGE_VERSION -o $OUTPUT_PATH 
+
