@@ -15,6 +15,6 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - --packages=${{ inputs.package-name }} 
+    - --packages=${{ inputs.packages }} 
     - --source=${{ inputs.source }} 
     - --api-key=${{ inputs.api-key }}
