@@ -17,7 +17,7 @@ inputs:
 
 runs:
   using: 'docker'
-  image: 'Dockerfile'
+  image: '../Dockerfile'
   args:
     - --command=${{ inputs.command }}
     - --package-name=${{ inputs.package-name }} 

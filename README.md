@@ -27,10 +27,14 @@ The pack action has the following inputs:
 ## Example usage
 
 ```yaml
-uses: EducationPerfect/protobuf-nuget-generator@master
+uses: EducationPerfect/protobuf-nuget/pack@v0.3.0
 with:
   package-name: 'AwesomePackage'
   package-version: 1.0.0
   protobuf-dir-path: ./protos
   output-path: ./packages
 ```
+
+---
+# Publish
+TBC
