@@ -27,7 +27,7 @@ echo "Packages = $PACKAGES"
 echo "Source   = $SOURCE"
 echo "API KEY  = ****"
 
-dotnet nuget push ./$PACKAGES \
+dotnet nuget push $PACKAGES \
           --source $SOURCE \
           --api-key $API_KEY \
           --skip-duplicate
