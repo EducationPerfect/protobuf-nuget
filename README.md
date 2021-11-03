@@ -1,6 +1,10 @@
-# Protobuf NuGet Generator
+# Protobuf NuGet GitHub Actions
 
-This action generates Nuget Packages out of Protobuf files.
+This repository contains pack and publish action to generate Nuget Packages out of Protobuf files and publish them.
+
+---
+# Pack
+The pack action has the following inputs:
 
 ## Inputs
 
