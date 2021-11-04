@@ -1,8 +1,6 @@
 #!/bin/sh -l
 
-#!/bin/sh
 SRC=./src
-
 
 for i in "$@"; do
   case $i in
@@ -23,10 +21,12 @@ for i in "$@"; do
   esac
 done
 
+echo "[Inputs]:"
 echo "Packages = $PACKAGES"
 echo "Source   = $SOURCE"
 echo "API KEY  = ****"
 
+echo "Publishing packages..."
 dotnet nuget push $PACKAGES \
           --source $SOURCE \
           --api-key $API_KEY \

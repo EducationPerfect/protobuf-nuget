@@ -15,7 +15,7 @@
 
   <PropertyGroup>
     <Company>Education Perfect</Company>
-    <Authors>Education Perfect</Authors>
+    <Authors>Team Void</Authors>
     <Copyright>Copyright $([System.DateTime]::Now.Year) Education Perfect</Copyright>
   </PropertyGroup>
 

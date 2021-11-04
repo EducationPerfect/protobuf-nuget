@@ -1,4 +1,4 @@
-name: 'Protobuf NuGet Package Generator'
+name: 'Protobuf NuGet Package'
 description: 'Generates and packs C# code as a NuGet package out of Protobuf files'
 inputs:
   package-name:
@@ -14,13 +14,21 @@ inputs:
     description: 'The path to the put generated package at'
     required: true
     default: "./packages"
-
+  company-name:
+    description: 'The name of the company publishing the package'
+    required: false
+    default: "Education Perfect"
+  authors:
+    description: 'The authors of the package'
+    required: true
+    default: "./packages"  
 runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - --command=${{ inputs.command }}
     - --package-name=${{ inputs.package-name }} 
     - --package-version=${{ inputs.package-version }} 
     - --protobuf-dir-path=${{ inputs.protobuf-dir-path }} 
     - --output-path=${{ inputs.output-path }}
+    - --company=${{ inputs.company-name }}
+    - --authors-path=${{ inputs.authors }}
