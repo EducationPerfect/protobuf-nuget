@@ -35,7 +35,7 @@ The authors of the package. The default value is `Education Perfect`.
 ## Example usage
 
 ```yaml
-uses: EducationPerfect/protobuf-nuget/pack@v0.3.8
+uses: EducationPerfect/protobuf-nuget/pack@v0.4
 with:
   package-name: 'AwesomePackage'
   package-version: 1.0.0
@@ -65,7 +65,7 @@ The `public` action publish the given Nuget packages to s given source and has t
 ## Example usage
 
 ```yaml
-uses: EducationPerfect/protobuf-nuget/publish@v0.3.8
+uses: EducationPerfect/protobuf-nuget/publish@v0.4
 with:
   packages: ./packages/*.nupkg
   source: https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json

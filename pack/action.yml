@@ -31,4 +31,4 @@ runs:
     - --protobuf-dir-path=${{ inputs.protobuf-dir-path }} 
     - --output-path=${{ inputs.output-path }}
     - --company=${{ inputs.company-name }}
-    - --authors-path=${{ inputs.authors }}
+    - --authors=${{ inputs.authors }}
