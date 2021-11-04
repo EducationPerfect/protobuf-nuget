@@ -14,9 +14,9 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Company>Education Perfect</Company>
-    <Authors>Team Void</Authors>
-    <Copyright>Copyright $([System.DateTime]::Now.Year) Education Perfect</Copyright>
+    <Company>{{ Company }}</Company>
+    <Authors>{{ Authors }}</Authors>
+    <Copyright>Copyright $([System.DateTime]::Now.Year) {{ Company }}</Copyright>
   </PropertyGroup>
 
   <ItemGroup>

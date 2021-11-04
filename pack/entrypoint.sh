@@ -45,7 +45,7 @@ echo "Clean up..."
 rm -rf ./src
 
 echo "Creating file 'Directory.Build.props'..."
-sed -i '' -e 's/{{ Company }}/$COMPANY/g' -e 's/{{ Authors }}/$AUTHORS/g'  Directory.Build.props
+sed -i '' -e 's/{{ Company }}/$COMPANY/g' -e 's/{{ Authors }}/$AUTHORS/g'  $(pwd)/Directory.Build.props
 
 echo "Creating $PACKAGE_NAME project..."
 dotnet new classlib --name $PACKAGE_NAME --output $SRC/$PACKAGE_NAME --framework netstandard2.0 
