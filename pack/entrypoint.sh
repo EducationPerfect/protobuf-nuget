@@ -51,16 +51,16 @@ echo "Creating $PACKAGE_NAME project..."
 dotnet new classlib --name $PACKAGE_NAME --output $SRC/$PACKAGE_NAME --framework netstandard2.0 
 rm -f ./$SRC/$PACKAGE_NAME/Class1.cs
 
-echo "Adding Protobuffer files..."
-files=$(find $PROTOBUF_FOLDER -name "*.proto")
+echo "Adding Protobuf files..."
+found=$(find $PROTOBUF_FOLDER -name "*.proto" | grep -q '.' && echo 'found')
 
-if (($#files)); then
+if [ "$found" = "found" ]; then
   for file in $(find $PROTOBUF_FOLDER -name "*.proto")
   do
       path="../.$file"
       echo "Creating $PACKAGE_NAME solution..."
       dotnet-grpc add-file  --services None --project ./$SRC/$PACKAGE_NAME/$PACKAGE_NAME.csproj  $path
-done
+  done
 
   echo "Packing $PACKAGE_NAME version $PACKAGE_VERSION at $OUTPUT_PATH"...
   dotnet pack ./$SRC/$PACKAGE_NAME/$PACKAGE_NAME.csproj -c Release -p:PackageVersion=$PACKAGE_VERSION -o $OUTPUT_PATH 
