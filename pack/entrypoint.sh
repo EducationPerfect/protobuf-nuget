@@ -1,5 +1,7 @@
 #!/bin/sh -l
 
+set -e
+
 SRC=./src
 
 for i in "$@"; do
@@ -51,7 +53,7 @@ export PATH="$PATH:/root/.dotnet/tools"
 dotnet tool install --global dotnet-grpc-cli --version 0.5.0
 
 echo "Creating file 'Directory.Build.props'..."
-cp /opt/build-tools/Directory.Build.props ./Directory.Build.props
+cp /opt/build-tools/Directory.Build.props.template ./Directory.Build.props
 sed -i -e "s/{{ Company }}/$COMPANY/g" -e "s/{{ Authors }}/$AUTHORS/g"  Directory.Build.props
 
 echo "Creating $PACKAGE_NAME project..."
