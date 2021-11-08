@@ -67,7 +67,6 @@ if [ "$found" = "found" ]; then
   for file in $(find $PROTOBUF_FOLDER -name "*.proto")
   do
       path="../.$file"
-      echo "Creating $PACKAGE_NAME solution..."
       dotnet-grpc add-file  --services None --project ./$SRC/$PACKAGE_NAME/$PACKAGE_NAME.csproj  $path
   done
 
