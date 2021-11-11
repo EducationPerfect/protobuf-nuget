@@ -1,17 +1,35 @@
 PWD:=$(shell pwd)
 
-.PHONY: build-pack
-build-pack:
+.PHONY: pack-build
+pack-build:
 	docker build -t protobuf-nuget-packer ./pack
 
-.PHONY: run-pack
-run-pack:
+.PHONY: pack-run
+pack-run:
 	docker run --rm -it --name protobuf-nuget-packer \
-		--volume $(PWD)/protosx:/protos --volume $(PWD)/artifacts:/artifacts\
+		--volume $(PWD)/../certificate-generation-contracts/protos:/protos --volume $(PWD)/artifacts:/artifacts \
 		protobuf-nuget-packer \
-			--package-name=EP.Contract.Awsome \
-			--package-version=1.1.0 \
+			--package-name=EP.Contract.POC \
+			--package-version=1.4.0 \
 			--protobuf-dir-path=/protos \
 			--output-path=./artifacts \
 			--company=EP \
 			--authors="Team Void"
+
+
+#--------- Debugging ---------------------------------------
+.PHONY: pack-shell
+pack-shell:
+	docker run --rm -it --name protobuf-nuget-packer \
+		--volume $(PWD)/../certificate-generation-contracts/protos:/protos --volume $(PWD)/artifacts:/artifacts \
+		--entrypoint /bin/sh \
+		protobuf-nuget-packer 
+
+.PHONY: entrypoint
+entrypoint:
+	./bin/entrypoint.sh --package-name=EP.Contract.POC --package-version=1.3.0 --protobuf-dir-path=/protos --output-path=./artifacts --company=EP --authors="Team Void"
+
+.PHONY: add-protos
+add-protos:
+	dotnet-grpc add-file --service None --project /src/EP.Contract.POC/EP.Contract.POC.csproj  /protos/ep/certificate_generation/events/*.proto
+

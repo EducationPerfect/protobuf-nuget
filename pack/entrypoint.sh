@@ -44,13 +44,10 @@ echo "  - Company         = $COMPANY"
 echo "  - Authors         = $AUTHORS"
 
 export PATH="$PATH:/root/.dotnet/tools"
+PROJ=./$SRC/$PACKAGE_NAME/$PACKAGE_NAME.csproj
 
 echo "Clean up..."
 rm -rf ./src
-
-echo "Installing GRPC tools"
-export PATH="$PATH:/root/.dotnet/tools"
-dotnet tool install --global dotnet-grpc-cli --version 0.5.0
 
 echo "Creating file 'Directory.Build.props'..."
 cp /opt/build-tools/Directory.Build.props.template ./Directory.Build.props
@@ -61,18 +58,33 @@ dotnet new classlib --name $PACKAGE_NAME --output $SRC/$PACKAGE_NAME --framework
 rm -f ./$SRC/$PACKAGE_NAME/Class1.cs
 
 echo "Adding Protobuf files..."
-found=$(find $PROTOBUF_FOLDER -name "*.proto" | grep -q '.' && echo 'found')
 
-if [ "$found" = "found" ]; then
-  for file in $(find $PROTOBUF_FOLDER -name "*.proto")
-  do
-      path="../.$file"
-      dotnet-grpc add-file  --services None --project ./$SRC/$PACKAGE_NAME/$PACKAGE_NAME.csproj  $path
-  done
-
-  echo "Packing $PACKAGE_NAME version $PACKAGE_VERSION at $OUTPUT_PATH"...
-  dotnet pack ./$SRC/$PACKAGE_NAME/$PACKAGE_NAME.csproj -c Release -p:PackageVersion=$PACKAGE_VERSION -o $OUTPUT_PATH
-else
+count=$(find $PROTOBUF_FOLDER -name "*.proto" | wc -l)
+if [ "$count" -eq "0" ]; then
   echo "Error: No Protobuf file found at '$PROTOBUF_FOLDER'"
   exit -1
+fi  
+
+for file in $(find $PROTOBUF_FOLDER -name "*.proto" -exec readlink -f {} \;)
+do
+  echo "Protobuf file found at '$file'. Trying to add it to the project..."
+  dotnet-grpc add-file  --services None --project $PROJ  $file
+done
+
+added_files=$(dotnet-grpc list --project $PROJ | grep -c "$PROTOBUF_FOLDER" )
+if [ $added_files -ne $count ]; then
+  echo "Error: The number of the Protobuf files found at the given path and the number of added files to the project doesn't march (found=$count,added=$added_files)!"
+  exit -1
+else
+    echo "$count Protobuf file(s) added to the project successfully"
+    echo " "
 fi
+
+echo "Restoring packages"...
+dotnet restore $PROJ
+
+echo "Building packages"...
+dotnet build -c Release -p:AssemblyVersion=$PACKAGE_VERSION --no-restore $PROJ
+
+echo "Packing $PACKAGE_NAME version $PACKAGE_VERSION at $OUTPUT_PATH"...
+dotnet pack $PROJ -c Release --no-build --no-restore  -p:PackageVersion=$PACKAGE_VERSION -o $OUTPUT_PATH 
