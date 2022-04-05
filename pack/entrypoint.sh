@@ -46,8 +46,6 @@ echo "  - Authors         = $AUTHORS"
 export PATH="$PATH:/root/.dotnet/tools"
 PROJ=./$SRC/$PACKAGE_NAME/$PACKAGE_NAME.csproj
 
-echo "Project: $PROJ"
-
 echo "Clean up..."
 rm -rf ./src
 
