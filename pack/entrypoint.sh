@@ -65,11 +65,12 @@ count=$(find $PROTOBUF_FOLDER -name "*.proto" | wc -l)
 if [ "$count" -eq "0" ]; then
   echo "Error: No Protobuf file found at '$PROTOBUF_FOLDER'"
   exit -1
-fi  
+fi
 
 for file in $(find $PROTOBUF_FOLDER -name "*.proto" -exec readlink -f {} \;)
 do
   echo "Protobuf file found at '$file'. Trying to add it to the project..."
+  cat $file
   echo "File: $file"
   echo "Proj: $PROJ"
   dotnet-grpc add-file  --services None --project $PROJ  $file
