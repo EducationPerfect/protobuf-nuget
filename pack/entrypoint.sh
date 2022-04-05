@@ -63,15 +63,16 @@ count=$(find $PROTOBUF_FOLDER -name "*.proto" | wc -l)
 if [ "$count" -eq "0" ]; then
   echo "Error: No Protobuf file found at '$PROTOBUF_FOLDER'"
   exit -1
-fi  
+fi
 
 for file in $(find $PROTOBUF_FOLDER -name "*.proto" -exec readlink -f {} \;)
 do
   echo "Protobuf file found at '$file'. Trying to add it to the project..."
-  dotnet-grpc add-file  --services None --project $PROJ  $file
+  dotnet-grpc add-file --services None --additional-import-dirs $PROTOBUF_FOLDER --project $PROJ  $file
 done
 
-added_files=$(dotnet-grpc list --project $PROJ | grep -c "$PROTOBUF_FOLDER" )
+added_files=$(dotnet-grpc list --project $PROJ | sed 's/\\/\//g' | grep -c "$PROTOBUF_FOLDER" )
+
 if [ $added_files -ne $count ]; then
   echo "Error: The number of the Protobuf files found at the given path and the number of added files to the project doesn't march (found=$count,added=$added_files)!"
   exit -1
@@ -84,4 +85,4 @@ echo "Restoring packages"...
 dotnet restore $PROJ
 
 echo "Packing $PACKAGE_NAME version $PACKAGE_VERSION at $OUTPUT_PATH"...
-dotnet pack $PROJ -c Release --no-restore  -p:PackageVersion=$PACKAGE_VERSION -o $OUTPUT_PATH 
+dotnet pack $PROJ -c Release --no-restore  -p:PackageVersion=$PACKAGE_VERSION -o $OUTPUT_PATH
