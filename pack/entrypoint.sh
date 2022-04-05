@@ -70,6 +70,8 @@ fi
 for file in $(find $PROTOBUF_FOLDER -name "*.proto" -exec readlink -f {} \;)
 do
   echo "Protobuf file found at '$file'. Trying to add it to the project..."
+  echo "File: $file"
+  echo "Proj: $PROJ"
   dotnet-grpc add-file  --services None --project $PROJ  $file
 done
 
