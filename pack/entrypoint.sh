@@ -57,6 +57,10 @@ echo "Creating $PACKAGE_NAME project..."
 dotnet new classlib --name $PACKAGE_NAME --output $SRC/$PACKAGE_NAME --framework netstandard2.0
 rm -f ./$SRC/$PACKAGE_NAME/Class1.cs
 
+echo "Adding packages..."
+dotnet add package Google.Protobuf
+dotnet add package Grpc.Tools
+
 echo "Adding Protobuf files..."
 
 count=$(find $PROTOBUF_FOLDER -name "*.proto" | wc -l)
@@ -85,4 +89,4 @@ echo "Restoring packages"...
 dotnet restore $PROJ
 
 echo "Packing $PACKAGE_NAME version $PACKAGE_VERSION at $OUTPUT_PATH"...
-dotnet pack $PROJ -c Release --no-restore --experimental_allow_proto3_optional  -p:PackageVersion=$PACKAGE_VERSION -o $OUTPUT_PATH 
+dotnet pack $PROJ -c Release --no-restore -p:PackageVersion=$PACKAGE_VERSION -o $OUTPUT_PATH 
