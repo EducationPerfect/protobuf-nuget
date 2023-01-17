@@ -58,8 +58,8 @@ dotnet new classlib --name $PACKAGE_NAME --output $SRC/$PACKAGE_NAME --framework
 rm -f ./$SRC/$PACKAGE_NAME/Class1.cs
 
 echo "Adding packages..."
-dotnet add package Google.Protobuf
-dotnet add package Grpc.Tools
+dotnet add ./$SRC/$PACKAGE_NAME/$PACKAGE_NAME.csproj package Google.Protobuf
+dotnet add ./$SRC/$PACKAGE_NAME/$PACKAGE_NAME.csproj package Grpc.Tools
 
 echo "Adding Protobuf files..."
 
